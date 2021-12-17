@@ -22,7 +22,7 @@ public class VizualizationThread extends Thread {
 		//	если не удалось выводим ошибки и показываем приветственное изображение
 		if (errors != "") {
 			textArea.setText(errors);
-			image.load("src/main/resourcesdefault.png");
+			image.load("src/main/resources/default.png");
 		}
 		//	если удалось - очищаем ошибки и показываем результат визуализации
 		else {
