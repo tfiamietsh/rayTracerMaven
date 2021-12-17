@@ -123,7 +123,7 @@ public class Script {
 		RayTracer tracer = new RayTracer();
 		tracer.configure(resolution);
 		
-		tracer.render("resources/RenderedScene.png", cameraPosition, fovy,
+		tracer.render("src/main/resources/RenderedScene.png", cameraPosition, fovy,
 			objects, ambientIntensity, ambientColor, lights, progressBar);
 	}
 	
