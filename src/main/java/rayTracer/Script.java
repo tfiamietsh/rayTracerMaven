@@ -329,7 +329,7 @@ public class Script {
 	private final static String ERR_IDENTIFIER =
 			"Недопустимый идентификатор";
 	private final static String ERR_SYNTAX =
-			"Синтаксическая ошибка";
+			"Синтаксическая ошибка - неверный формат параметра идентификатора";
 	private final static String ERR_CAMERA =
 			"Отсутствует идентификатор камеры";
 	private final static String ERR_AMBIENT =

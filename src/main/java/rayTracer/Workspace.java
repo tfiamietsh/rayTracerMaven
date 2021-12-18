@@ -39,8 +39,9 @@ public class Workspace extends JFrame {
 		JMenuItem menuFileOpen = new JMenuItem("Открыть");
 		menuFileOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser fileChooser = new JFileChooser("f:");
-				
+				String scriptsDirectory = System.getProperty("user.dir") + "/src/main/resources/scripts";
+				JFileChooser fileChooser = new JFileChooser(new File(scriptsDirectory));
+
 				int openDialogState = fileChooser.showOpenDialog(null);
 				//	если пользователь выбрал файл
 				if (openDialogState == JFileChooser.APPROVE_OPTION) {
@@ -72,7 +73,8 @@ public class Workspace extends JFrame {
 		JMenuItem menuFileSave = new JMenuItem("Сохранить");
 		menuFileSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser fileChooser = new JFileChooser("f:");
+				String scriptsDirectory = System.getProperty("user.dir") + "/src/main/resources/scripts";
+				JFileChooser fileChooser = new JFileChooser(scriptsDirectory);
 				
 				int saveDialogState = fileChooser.showSaveDialog(null);
 				if (saveDialogState == JFileChooser.APPROVE_OPTION) {
