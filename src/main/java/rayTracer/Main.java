@@ -5,6 +5,8 @@ package rayTracer;
 //	добавить камеру
 //	добавить тени
 
+import rayTracer.ui.Workspace;
+
 public class Main {
 	public static void main(String[] args) {
 		Workspace workspace = new Workspace();
