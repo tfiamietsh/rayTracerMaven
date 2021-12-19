@@ -25,7 +25,7 @@ public class Sphere extends RTObject {
         float D = B * B - 4 * A * C;
         if (D >= 0) {
             //	вычисляем меньший из корней,
-            //	это и будет наименьшее растояние до сферы
+            //	это и будет наименьшее расстояние до сферы
             float dist = (-B - (float) (Math.sqrt(D))) / (2 * A);
             if (dist > 0)
                 return dist;

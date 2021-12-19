@@ -28,7 +28,7 @@ public class RayTracer {
     //	вычисление происходит для всех объектов и источников света в сцене (ambient тоже)
     private Vec3f castRay(Vec3f origin, Vec3f dir, ArrayList<RTObject> objects,
                           float ambientIntensity, Vec3f ambientColor, ArrayList<PointLight> lights) {
-        //	ближайшая точка пересечения луча с некоторым объектом, номаль в этой точке
+        //	ближайшая точка пересечения луча с некоторым объектом, нормаль в этой точке
         Vec3f hitPoint = new Vec3f(), N = new Vec3f();
         //	изначально материалом объекта будет материал фона,
         //	так если не будет пересечения, вернем материал фона
@@ -120,7 +120,7 @@ public class RayTracer {
                 direction = direction.sub(cameraPosition);
                 direction.normalize();
 
-                //	вычисляем цвет который вернет результат трассировки
+                //	вычисляем цвет, который вернет результат трассировки
                 //	и конвертируем его из Vec3f в Int
                 Vec3f Vec3fColor =
                         castRay(cameraPosition, direction, objects,

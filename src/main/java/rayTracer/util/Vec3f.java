@@ -40,7 +40,7 @@ public class Vec3f {
         return this.x * other.x + this.y * other.y + this.z * other.z;
     }
 
-    //	векторное умножение векторов
+    //	векторное произведение векторов
     public Vec3f mul(Vec3f other) {
         float tmpX = y * other.z - z * other.y;
         float tmpY = z * other.x - x * other.z;

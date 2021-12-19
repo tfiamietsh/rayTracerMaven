@@ -9,16 +9,16 @@ public class Camera {
     private float _angleX, _angleY, _angleZ;
     private Vec3f right, up;
 
-    Camera() {
+    public Camera() {
     }
 
-    Camera(Vec3f position, Vec3f orientation, int fovyInDegrees) {
+    public Camera(Vec3f position, Vec3f orientation, int fovyInDegrees) {
         setPosition(position);
         setOrientation(orientation);
         setFOVy(fovyInDegrees);
     }
 
-    Vec3f calculateRayDirection2(int pixelX, int pixelY, int width, int height) {
+    public Vec3f calculateRayDirection2(int pixelX, int pixelY, int width, int height) {
         float normalized_i = ((float) (pixelX) / width - .5f) * width / height;
         float normalized_j = (float) (height - pixelY) / height - .5f;
         Vec3f image_point = right.mul(normalized_i).add(up.mul(normalized_j))
@@ -28,7 +28,7 @@ public class Camera {
         return direction;
     }
 
-    Vec3f calculateRayDirection(int pixelX, int pixelY, int width, int height) {
+    public Vec3f calculateRayDirection(int pixelX, int pixelY, int width, int height) {
         //	вычисляем относительно точки (0, 0, 0) = начала координат
         float x = (2 * (pixelX + .5f) / width - 1) * _halfTanFovy * width / height;
         float y = (2 * ((height - pixelY) + .5f) / height - 1) * _halfTanFovy;
@@ -43,24 +43,24 @@ public class Camera {
         return dir.add(position);
     }
 
-    void setFOVy(int fovyInDegrees) {
+    public void setFOVy(int fovyInDegrees) {
         float fovy = (float) (fovyInDegrees * Math.PI / 180);
         this._halfTanFovy = (float) (Math.tan(fovy / 2));
     }
 
-    Vec3f getPosition() {
+    public Vec3f getPosition() {
         return position;
     }
 
-    void setPosition(Vec3f position) {
+    public void setPosition(Vec3f position) {
         this.position = position;
     }
 
-    Vec3f getOrientation() {
+    public Vec3f getOrientation() {
         return orientation;
     }
 
-    void setOrientation(Vec3f orientation) {
+    public void setOrientation(Vec3f orientation) {
         orientation.normalize();
         this.orientation = orientation;
 
@@ -72,7 +72,7 @@ public class Camera {
         _angleZ = (float) (Math.acos(tempXY.dot(_initialOrientation)));
     }
 
-    void setUp(Vec3f up) {
+    public void setUp(Vec3f up) {
         up.normalize();
         this.up = up;
         this.right = this.orientation.mul(up);

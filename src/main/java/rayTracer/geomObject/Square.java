@@ -25,8 +25,8 @@ public class Square extends RTObject {
         float dist = (vertex1.sub(origin)).dot(getNormal()) /
                 dir.dot(normal);
 
-        Vec3f intesectPoint = origin.add(dir.mul(dist));
-        Vec3f v = intesectPoint.sub(vertex1);
+        Vec3f intersectPoint = origin.add(dir.mul(dist));
+        Vec3f v = intersectPoint.sub(vertex1);
 
         float width = widthVec.length();
         heightVec = getNormal().mul(widthVec);

@@ -4,7 +4,7 @@ import rayTracer.util.Vec3f;
 
 import java.awt.*;
 
-//	класс материала, хранит цвет и показатель глянцевости
+//	класс материала, хранит цвет и показатель глянца
 public class Material {
     private Vec3f diffuseColor;
     private float shineness;

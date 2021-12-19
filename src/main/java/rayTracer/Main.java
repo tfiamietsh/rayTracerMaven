@@ -1,10 +1,5 @@
 package rayTracer;
 
-//	? добавить несколько сценариев
-//	? исправить пересечения
-//	добавить камеру
-//	добавить тени
-
 import rayTracer.ui.Workspace;
 
 public class Main {
@@ -13,7 +8,7 @@ public class Main {
 
 		/* далее идет блок теста без графического интерфейса
 		
-		//	создаем новый объекст трассировщика
+		//	создаем новый объект трассировщика
 		RayTracer tracer = new RayTracer();
 		tracer.configure(new Dimension(1920, 1080));
 		

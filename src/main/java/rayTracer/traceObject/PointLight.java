@@ -27,7 +27,7 @@ public class PointLight {
 
     //	функция вычисляет освещения от источника света в точке point
     //	с нормалью normal, направлением взгляда viewDir, материала material,
-    //	с интенсивностью освещения окрежения ambientIntensity и цветом окружения ambientColor
+    //	с интенсивностью освещения окружения ambientIntensity и цветом окружения ambientColor
     public Vec3f calculateColorAtPoint(Vec3f point, Vec3f normal, Vec3f viewDir,
                                        Material material, float ambientIntensity, Vec3f ambientColor) {
         Vec3f lightDir = this.position.sub(point);
@@ -46,7 +46,7 @@ public class PointLight {
         Vec3f reflectDir = Vec3f.reflect(lightDir.mul(-1.f), normal).mul(-1.f);
         float spec = (float) (Math.pow(Math.max(viewDir.dot(reflectDir), 0.f),
                 Math.max(material.getShineness(), 0.1f)));
-        //	вычисляем комноненты освещения: окружения, диффузную и бликовую
+        //	вычисляем компоненты освещения: окружения, диффузную и бликовую
         Vec3f ambient = ambientColor.mul(ambientIntensity).mulCW(material.getDiffuseColor());
         Vec3f diffuse = this.color.mul(this.intensity * diff).mulCW(material.getDiffuseColor());
         Vec3f specular = this.color.mul(this.intensity * spec).mulCW(material.getDiffuseColor());

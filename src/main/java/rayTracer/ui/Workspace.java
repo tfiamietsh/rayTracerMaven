@@ -40,67 +40,61 @@ public class Workspace extends JFrame {
 
         //	кнопка опустошения полей сценария и ошибок
         JMenuItem menuFileNew = new JMenuItem("Новый");
-        menuFileNew.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                scriptTextArea.setText("");
-                errorsTextArea.setText("");
-            }
+        menuFileNew.addActionListener(e -> {
+            scriptTextArea.setText("");
+            errorsTextArea.setText("");
         });
 
         //	кнопка меню открытия файла
         JMenuItem menuFileOpen = new JMenuItem("Открыть");
-        menuFileOpen.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String scriptsDirectory = System.getProperty("user.dir") + "/src/main/resources/scripts";
-                JFileChooser fileChooser = new JFileChooser(new File(scriptsDirectory));
+        menuFileOpen.addActionListener(e -> {
+            String scriptsDirectory = System.getProperty("user.dir") + "/src/main/resources/scripts";
+            JFileChooser fileChooser = new JFileChooser(new File(scriptsDirectory));
 
-                int openDialogState = fileChooser.showOpenDialog(null);
-                //	если пользователь выбрал файл
-                if (openDialogState == JFileChooser.APPROVE_OPTION) {
-                    File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
-                    try {
-                        String line = "", text = "";
-                        //	записываем содержимое в поле сценария в кодировке UTF-8
-                        InputStreamReader isr = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8);
-                        BufferedReader bufferedReader = new BufferedReader(isr);
+            int openDialogState = fileChooser.showOpenDialog(null);
+            //	если пользователь выбрал файл
+            if (openDialogState == JFileChooser.APPROVE_OPTION) {
+                File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
+                try {
+                    String line, text;
+                    //	записываем содержимое в поле сценария в кодировке UTF-8
+                    InputStreamReader isr = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8);
+                    BufferedReader bufferedReader = new BufferedReader(isr);
 
-                        text = bufferedReader.readLine();
-                        while ((line = bufferedReader.readLine()) != null)
-                            text = text + "\n" + line;
+                    text = bufferedReader.readLine();
+                    while ((line = bufferedReader.readLine()) != null)
+                        text = text + "\n" + line;
 
-                        scriptTextArea.setText(text);
-                        errorsTextArea.setText("");
+                    scriptTextArea.setText(text);
+                    errorsTextArea.setText("");
 
-                        bufferedReader.close();
-                    } catch (Exception ex) {
-                        //	если что-то пошло не так выводим высплывающее окно с ошибкой
-                        JOptionPane.showMessageDialog(null, ex.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE);
-                    }
+                    bufferedReader.close();
+                } catch (Exception ex) {
+                    //	если что-то пошло не так выводим всплывающее окно с ошибкой
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
 
         //	кнопка сохранения файла, работает аналогично кнопке открыть
         JMenuItem menuFileSave = new JMenuItem("Сохранить");
-        menuFileSave.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String scriptsDirectory = System.getProperty("user.dir") + "/src/main/resources/scripts";
-                JFileChooser fileChooser = new JFileChooser(scriptsDirectory);
+        menuFileSave.addActionListener(e -> {
+            String scriptsDirectory = System.getProperty("user.dir") + "/src/main/resources/scripts";
+            JFileChooser fileChooser = new JFileChooser(scriptsDirectory);
 
-                int saveDialogState = fileChooser.showSaveDialog(null);
-                if (saveDialogState == JFileChooser.APPROVE_OPTION) {
-                    File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
-                    try {
-                        OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
-                        BufferedWriter w = new BufferedWriter(osw);
+            int saveDialogState = fileChooser.showSaveDialog(null);
+            if (saveDialogState == JFileChooser.APPROVE_OPTION) {
+                File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
+                try {
+                    OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
+                    BufferedWriter w = new BufferedWriter(osw);
 
-                        w.write(scriptTextArea.getText());
+                    w.write(scriptTextArea.getText());
 
-                        w.flush();
-                        w.close();
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(null, ex.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE);
-                    }
+                    w.flush();
+                    w.close();
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -119,45 +113,41 @@ public class Workspace extends JFrame {
 
         //	кнопка, при нажатии на которую открывается текущая директория
         JMenuItem menuOptionsOpenCurrentDir = new JMenuItem("Открыть текущую директорию");
-        menuOptionsOpenCurrentDir.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    String dir = System.getProperty("user.dir");
-                    Runtime.getRuntime().exec("explorer " + dir);
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE);
-                }
+        menuOptionsOpenCurrentDir.addActionListener(e -> {
+            try {
+                String dir = System.getProperty("user.dir");
+                Runtime.getRuntime().exec("explorer " + dir);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE);
             }
         });
 
         //	кнопка создающая всплывающее меню для задания нового разрешения изображению
         JMenuItem menuOptionsChangeResolution = new JMenuItem("Изменить размер изображения");
-        menuOptionsChangeResolution.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //	создаем панельку с 4мя элементами
-                JPanel panel = new JPanel(new GridLayout(5, 2));
-                JLabel widthLabel = new JLabel("Введите новую ширину изображения");
-                JTextField widthField = new JTextField(5);
-                widthField.setText(String.valueOf(renderResolution.width));
-                JLabel heightLabel = new JLabel("Введите новую высоту изображения");
-                JTextField heightField = new JTextField(5);
-                heightField.setText(String.valueOf(renderResolution.height));
-                //	добавляем элементы в панельку
-                panel.add(widthLabel);
-                panel.add(widthField);
-                panel.add(heightLabel);
-                panel.add(heightField);
-                //	показываем всплывающее окно с панелькой
-                JOptionPane.showMessageDialog(null, panel, "Изменение размеров изображения",
-                        JOptionPane.PLAIN_MESSAGE);
+        menuOptionsChangeResolution.addActionListener(e -> {
+            //	создаем панельку с 4мя элементами
+            JPanel panel = new JPanel(new GridLayout(5, 2));
+            JLabel widthLabel = new JLabel("Введите новую ширину изображения");
+            JTextField widthField = new JTextField(5);
+            widthField.setText(String.valueOf(renderResolution.width));
+            JLabel heightLabel = new JLabel("Введите новую высоту изображения");
+            JTextField heightField = new JTextField(5);
+            heightField.setText(String.valueOf(renderResolution.height));
+            //	добавляем элементы в панельку
+            panel.add(widthLabel);
+            panel.add(widthField);
+            panel.add(heightLabel);
+            panel.add(heightField);
+            //	показываем всплывающее окно с панелькой
+            JOptionPane.showMessageDialog(null, panel, "Изменение размеров изображения",
+                    JOptionPane.PLAIN_MESSAGE);
 
-                //	устанавливаем новые размеры, если больше нуля
-                int newWidth = Integer.parseInt(widthField.getText());
-                int newHeight = Integer.parseInt(heightField.getText());
-                if (newWidth > 0 && newHeight > 0) {
-                    renderResolution.width = newWidth;
-                    renderResolution.height = newHeight;
-                }
+            //	устанавливаем новые размеры, если больше нуля
+            int newWidth = Integer.parseInt(widthField.getText());
+            int newHeight = Integer.parseInt(heightField.getText());
+            if (newWidth > 0 && newHeight > 0) {
+                renderResolution.width = newWidth;
+                renderResolution.height = newHeight;
             }
         });
 
@@ -170,19 +160,17 @@ public class Workspace extends JFrame {
 
         //	добавим кнопку выполнения сценария
         final JMenuItem menuExecute = new JMenuItem("Выполнить сценарий");
-        menuExecute.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //	если кнопка антивна,
-                if (menuExecute.isEnabled()) {
-                    //	на время выполнения скрываем прогрессбар и деактивируем кнопку
-                    viewProgressBar.setVisible(true);
-                    menuExecute.setEnabled(false);
+        menuExecute.addActionListener(e -> {
+            //	если кнопка антивна,
+            if (menuExecute.isEnabled()) {
+                //	на время выполнения скрываем прогрессбар и деактивируем кнопку
+                viewProgressBar.setVisible(true);
+                menuExecute.setEnabled(false);
 
-                    //	запускаем новый поток с визуализацией
-                    VizualizationThread thread = new VizualizationThread(
-                            scriptTextArea.getText(), renderResolution, viewProgressBar, viewImage, errorsTextArea, menuExecute);
-                    thread.start();
-                }
+                //	запускаем новый поток с визуализацией
+                VizualizationThread thread = new VizualizationThread(
+                        scriptTextArea.getText(), renderResolution, viewProgressBar, viewImage, errorsTextArea, menuExecute);
+                thread.start();
             }
         });
 
@@ -271,7 +259,7 @@ public class Workspace extends JFrame {
             scriptTextArea.setFont(DEFAULT_FONT);
             scriptTextArea.setLineWrap(true);
 
-            //	сдесь происходит добавление столбца с номером строки
+            //	здесь происходит добавление столбца с номером строки
             final JTextArea lines = new JTextArea("1");
             lines.setBackground(new Color(215, 215, 215));
             lines.setFont(DEFAULT_FONT);
@@ -312,7 +300,7 @@ public class Workspace extends JFrame {
             scriptPanel.setPreferredSize(new Dimension(scriptPanelWidth, scriptPanelHeight));
         }
 
-        //	упаковывем все панельки в боксы, чтобы выглядело красиво
+        //	упаковываем все панельки в боксы, чтобы выглядело красиво
         Box ViewInfoBox = Box.createVerticalBox();
         ViewInfoBox.add(viewPanel);
 
@@ -339,13 +327,11 @@ public class Workspace extends JFrame {
 
         //	обработка глобального нажатия Esc с закрытием приложения
         KeyboardFocusManager.getCurrentKeyboardFocusManager()
-                .addKeyEventDispatcher(new KeyEventDispatcher() {
-                                           public boolean dispatchKeyEvent(KeyEvent e) {
-                                               if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
-                                                   frame.dispose();
-                                               return false;
-                                           }
-                                       }
+                .addKeyEventDispatcher(e -> {
+                    if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
+                        frame.dispose();
+                    return false;
+                }
                 );
     }
 }

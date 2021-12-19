@@ -45,7 +45,7 @@ public class Script {
     public static String tryToExecuteScript(String script, Dimension resolution,
                                             JProgressBar progressBar) {
         String errors = checkForErrors(script);
-        if (errors == "")
+        if (errors.equals(""))
             executeScript(script, resolution, progressBar);
         return errors;
     }
@@ -135,7 +135,7 @@ public class Script {
 
                                         objects.add(square);
                                     } else
-                                        //	циллиндр
+                                        //	цилиндр
                                         if (lines[i].startsWith("cy ")) {
                                             Cylinder cylinder = new Cylinder();
                                             Vec3f center1 = extractVec3f(line[1]);
@@ -162,7 +162,7 @@ public class Script {
                 objects, ambientIntensity, ambientColor, lights, progressBar);
     }
 
-    //	функция которая проверяет сценарий на наличие ошибок
+    //	функция, которая проверяет сценарий на наличие ошибок
     static String checkForErrors(String script) {
         String errors = "";
         String[] lines = script.split("\r\n|\r|\n");
